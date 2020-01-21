@@ -8,10 +8,12 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Navbar />
-      <Switch>
-        <Route path={"/"} exact component={HomePage} />
-        <Route path={"/about"} exact component={AboutPage} />
-      </Switch>
+      <div className="container pt-4">
+        <Switch>
+          <Route path={"/"} exact component={HomePage} />
+          <Route path={"/about"} exact component={AboutPage} />
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 };
