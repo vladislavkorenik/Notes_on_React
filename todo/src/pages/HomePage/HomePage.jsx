@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Form } from "../../components/Form/Form";
 import { Notes } from "../../components/Notes/Notes";
+import { Alert } from "../../components/Alert/Alert";
 
 export const HomePage = () => {
   const notes = new Array(3)
@@ -9,6 +10,7 @@ export const HomePage = () => {
 
   return (
     <Fragment>
+      <Alert />
       <Form />
       <Notes notes={notes} />
     </Fragment>
