@@ -5,7 +5,7 @@ import { ALERT } from "../../consts/types";
 
 export const AlertState = ({ children }) => {
   const [state, dispatch] = useReducer(alertReducer, { visiable: false });
-  const show = (text, type = "warning") => {
+  const show = (text, type) => {
     dispatch({
       type: ALERT.SHOW,
       payload: { text, type }

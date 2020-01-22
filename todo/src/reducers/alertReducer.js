@@ -2,7 +2,7 @@ import { ALERT } from "../consts/types";
 
 const handlers = {
   [ALERT.SHOW]: (state, { payload }) => ({ ...payload, visiable: true }),
-  [ALERT.HIDE]: state => ({ visiable: false }),
+  [ALERT.HIDE]: state => ({...state, visiable: false }),
   DEFAULT: state => state
 };
 
