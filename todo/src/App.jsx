@@ -1,12 +1,15 @@
 import React from "react";
 import Router from "./Router/Router";
 import { AlertState } from "./context/alert/AlertState";
+import { FirebaseState } from "./context/firebase/FirebaseState";
 
 function App() {
   return (
-    <AlertState>
-      <Router />
-    </AlertState>
+    <FirebaseState>
+      <AlertState>
+        <Router />
+      </AlertState>
+    </FirebaseState>
   );
 }
 

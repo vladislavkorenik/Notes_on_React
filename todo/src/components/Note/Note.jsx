@@ -7,7 +7,7 @@ export const Note = ({ note }) => {
       <li className="list-group-item note_space-between">
         <div className="note__info">
           <strong>{note.title}</strong>
-          <small>{new Date().toLocaleDateString()}</small>
+          <small>{note.date}</small>
         </div>
         <button type="button" className="btn btn-outline-danger btn-sm">
           &times;

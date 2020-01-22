@@ -3,3 +3,10 @@ export const ALERT = {
   HIDE: "ALERT_HIDE"
 };
 
+export const NOTE = {
+  ADD: "NOTE_ADD",
+  REMOVE: "NOTE_DELETE"
+};
+
+export const SHOW_LOADER = "SHOW_LOADER";
+export const FETCH_NOTES = "FETCH_NOTES";

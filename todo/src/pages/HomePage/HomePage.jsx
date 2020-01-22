@@ -1,12 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { Form } from "../../components/Form/Form";
 import { Notes } from "../../components/Notes/Notes";
 import { Alert } from "../../components/Alert/Alert";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
 export const HomePage = () => {
-  const notes = new Array(3)
-    .fill("")
-    .map((_, i) => ({ id: i * i - 4, title: `Note ${i}` }));
+  const { loading, notes, fetchNotes } = useContext(FirebaseContext);
 
   return (
     <Fragment>
