@@ -17,8 +17,12 @@ export const FirebaseState = ({ children }) => {
   };
 
   const fetchNotes = async () => {
+    showLoader();
     const response = await fetch(`${url}/notes.json`);
     const res = await response.json();
+    if (res === null) {
+      return 0;
+    }
     const payload = Object.keys(res).map(key => {
       return {
         ...res[key],
@@ -30,7 +34,18 @@ export const FirebaseState = ({ children }) => {
       payload
     });
   };
-  fetchNotes();
+
+  const removeNote = async id => {
+    await fetch(`${url}/notes/${id}.json`, {
+      method: "DELETE"
+    });
+
+    dispatch({
+      type: NOTE.REMOVE,
+      payload: id
+    });
+  };
+
   const addNote = async title => {
     const note = {
       title,
@@ -61,7 +76,14 @@ export const FirebaseState = ({ children }) => {
 
   return (
     <FirebaseContext.Provider
-      value={{ addNote, fetchNotes, notes: state.notes }}
+      value={{
+        addNote,
+        fetchNotes,
+        removeNote,
+        showLoader,
+        loading: state.loading,
+        notes: state.notes
+      }}
     >
       {children}
     </FirebaseContext.Provider>

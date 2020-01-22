@@ -10,7 +10,11 @@ const handlers = {
     notes: state.notes.filter(note => note.id !== payload)
   }),
   [SHOW_LOADER]: state => ({ ...state, loading: true }),
-  [FETCH_NOTES]: (state, { payload }) => ({ ...state, notes: payload }),
+  [FETCH_NOTES]: (state, { payload }) => ({
+    ...state,
+    notes: payload,
+    loading: false
+  }),
   DEFAULT: state => state
 };
 export const firebaseReducer = (state, action) => {

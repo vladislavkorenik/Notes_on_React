@@ -1,7 +1,9 @@
-import React, { Fragment } from "react";
-import './Note.scss'
+import React, { Fragment, useContext } from "react";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
+import "./Note.scss";
 
 export const Note = ({ note }) => {
+  const firebase = useContext(FirebaseContext);
   return (
     <Fragment>
       <li className="list-group-item note_space-between">
@@ -9,7 +11,11 @@ export const Note = ({ note }) => {
           <strong>{note.title}</strong>
           <small>{note.date}</small>
         </div>
-        <button type="button" className="btn btn-outline-danger btn-sm">
+        <button
+          onClick={() => firebase.removeNote(note.id)}
+          type="button"
+          className="btn btn-outline-danger btn-sm"
+        >
           &times;
         </button>
       </li>
