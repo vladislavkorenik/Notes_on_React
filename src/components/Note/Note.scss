@@ -8,6 +8,14 @@
   }
 }
 
+.note__buttons {
+  display: flex;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
 .note-exit-active {
   animation: note 800ms ease-out;
 }
@@ -27,5 +35,14 @@
   100% {
     opacity: 0;
     transform: translateX(-200px);
+  }
+}
+@media screen and (max-width: 600px) {
+  .note__buttons {
+    flex-direction: column;
+
+    button:first-child {
+      margin-bottom: 10px;
+    }
   }
 }

@@ -49,7 +49,7 @@ export const FirebaseState = ({ children }) => {
   const addNote = async title => {
     const note = {
       title,
-      date: new Date().toLocaleDateString()
+      date: new Date().toLocaleString()
     };
     try {
       const response = await fetch(`${url}/notes.json`, {

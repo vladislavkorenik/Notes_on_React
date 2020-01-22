@@ -10,19 +10,24 @@ export const Note = ({ note }) => {
     <Fragment>
       <li className="list-group-item note_space-between">
         <div className="note__info">
-          <strong>{note.title}</strong>
+          <strong className="text-break">{note.title}</strong>
           <small>{note.date}</small>
         </div>
-        <button
-          onClick={() => {
-            firebase.removeNote(note.id);
-            alert.show("Note deleted", "danger");
-          }}
-          type="button"
-          className="btn btn-outline-danger btn-sm"
-        >
-          &times;
-        </button>
+        <div className="note__buttons">
+          <button type="button" className="btn btn-dark">
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              firebase.removeNote(note.id);
+              alert.show("Note deleted", "danger");
+            }}
+            type="button"
+            className="btn btn-outline-danger btn-sm"
+          >
+            &times;
+          </button>
+        </div>
       </li>
     </Fragment>
   );
