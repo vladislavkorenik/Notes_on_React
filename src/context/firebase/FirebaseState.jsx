@@ -35,6 +35,24 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
+  const editNote = async payload => {
+    const note = {
+      title: payload.title,
+      date: new Date().toLocaleString()
+    };
+    await fetch(`${url}/notes/${payload.id}.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      body: JSON.stringify(note)
+    });
+    dispatch({
+      type: NOTE.EDIT,
+      payload: { note, id: payload.id }
+    });
+  };
+
   const removeNote = async id => {
     await fetch(`${url}/notes/${id}.json`, {
       method: "DELETE"
@@ -81,6 +99,7 @@ export const FirebaseState = ({ children }) => {
         fetchNotes,
         removeNote,
         showLoader,
+        editNote,
         loading: state.loading,
         notes: state.notes
       }}

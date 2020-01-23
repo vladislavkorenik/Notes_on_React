@@ -1,6 +1,16 @@
 import { FETCH_NOTES, SHOW_LOADER, NOTE } from "../consts/types";
 
 const handlers = {
+  [NOTE.EDIT]: (state, { payload }) => ({
+    ...state,
+    notes: state.notes.map(note => {
+      if (note.id === payload.id) {
+        note.title = payload.note.title;
+        note.date = payload.note.date;
+      }
+      return note
+    })
+  }),
   [NOTE.ADD]: (state, { payload }) => ({
     ...state,
     notes: [...state.notes, payload]

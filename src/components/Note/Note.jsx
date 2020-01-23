@@ -1,11 +1,13 @@
-import React, { Fragment, useContext } from "react";
-import { FirebaseContext } from "../../context/firebase/firebaseContext";
+import React, { Fragment, useContext, useState } from "react";
 import "./Note.scss";
 import { AlertContext } from "../../context/alert/alertContext";
+import { EditModal } from "../EditModal/EditModel";
+import { FirebaseContext } from "../../context/firebase/firebaseContext";
 
 export const Note = ({ note }) => {
-  const firebase = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
+  const firebase = useContext(FirebaseContext);
+  const [value, setValue] = useState({ show: "none", showOpacity: 0, note });
   return (
     <Fragment>
       <li className="list-group-item note_space-between">
@@ -14,7 +16,13 @@ export const Note = ({ note }) => {
           <small>{note.date}</small>
         </div>
         <div className="note__buttons">
-          <button type="button" className="btn btn-dark">
+          <button
+            onClick={() => setValue({ show: "block", showOpacity: 1 })}
+            type="button"
+            className="btn btn-dark"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
             Edit
           </button>
           <button
@@ -29,6 +37,7 @@ export const Note = ({ note }) => {
           </button>
         </div>
       </li>
+      <EditModal value={value} setValue={setValue} note={note} />
     </Fragment>
   );
 };

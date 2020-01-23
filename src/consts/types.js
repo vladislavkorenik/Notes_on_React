@@ -5,7 +5,8 @@ export const ALERT = {
 
 export const NOTE = {
   ADD: "NOTE_ADD",
-  REMOVE: "NOTE_DELETE"
+  REMOVE: "NOTE_DELETE",
+  EDIT: "NOTE_EDIT",
 };
 
 export const SHOW_LOADER = "SHOW_LOADER";
