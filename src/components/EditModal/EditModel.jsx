@@ -31,7 +31,7 @@ export const EditModal = ({ value, setValue, note }) => {
   };
 
   return (
-    <div style={ModalDisplay} className="modal fade">
+    <div style={ModalDisplay} className="modal">
       <div className="modal-content">
         <div className="modal-header">
           <h5 className="modal-title">Edit your note</h5>

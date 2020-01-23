@@ -1,13 +1,15 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import "./Note.scss";
-import { AlertContext } from "../../context/alert/alertContext";
 import { EditModal } from "../EditModal/EditModel";
-import { FirebaseContext } from "../../context/firebase/firebaseContext";
+import { AcceptModal } from "../AcceptModal/AcceptModal";
 
 export const Note = ({ note }) => {
-  const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
   const [value, setValue] = useState({ show: "none", showOpacity: 0, note });
+  const [valueModal, setValueModal] = useState({
+    show: "none",
+    showOpacity: 0
+  });
+
   return (
     <Fragment>
       <li className="list-group-item note_space-between">
@@ -26,15 +28,17 @@ export const Note = ({ note }) => {
             Edit
           </button>
           <button
-            onClick={() => {
-              firebase.removeNote(note.id);
-              alert.show("Note deleted", "danger");
-            }}
+            onClick={() => setValueModal({ show: "block", showOpacity: 1 })}
             type="button"
             className="btn btn-outline-danger btn-sm"
           >
             &times;
           </button>
+          <AcceptModal
+            valueModal={valueModal}
+            setValueModal={setValueModal}
+            note={note}
+          />
         </div>
       </li>
       <EditModal value={value} setValue={setValue} note={note} />
