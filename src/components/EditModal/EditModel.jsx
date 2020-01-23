@@ -72,7 +72,7 @@ export const EditModal = ({ value, setValue, note }) => {
           <button
             onClick={() => submitHandler()}
             type="button"
-            className="btn btn-primary"
+            className="btn btn-success"
           >
             Accept
           </button>

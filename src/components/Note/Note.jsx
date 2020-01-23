@@ -1,14 +1,17 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import "./Note.scss";
 import { EditModal } from "../EditModal/EditModel";
 import { AcceptModal } from "../AcceptModal/AcceptModal";
+import { SwitchContext } from "../../context/switch/switchContext";
 
 export const Note = ({ note }) => {
+  const switcher = useContext(SwitchContext);
   const [value, setValue] = useState({ show: "none", showOpacity: 0, note });
   const [valueModal, setValueModal] = useState({
     show: "none",
     showOpacity: 0
   });
+  const classes = `btn ${switcher.themeSwitcher ? "btn-dark" : "btn-danger"}`;
 
   return (
     <Fragment>
@@ -21,7 +24,7 @@ export const Note = ({ note }) => {
           <button
             onClick={() => setValue({ show: "block", showOpacity: 1 })}
             type="button"
-            className="btn btn-dark"
+            className={classes}
             data-toggle="modal"
             data-target="#exampleModal"
           >

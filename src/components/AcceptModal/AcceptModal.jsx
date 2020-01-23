@@ -51,7 +51,7 @@ export const AcceptModal = ({ valueModal, setValueModal, note }) => {
           <button
             onClick={() => acceptModal()}
             type="button"
-            className="btn btn-primary"
+            className="btn btn-success"
           >
             Yes
           </button>

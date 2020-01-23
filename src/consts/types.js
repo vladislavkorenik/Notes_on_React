@@ -6,8 +6,9 @@ export const ALERT = {
 export const NOTE = {
   ADD: "NOTE_ADD",
   REMOVE: "NOTE_DELETE",
-  EDIT: "NOTE_EDIT",
+  EDIT: "NOTE_EDIT"
 };
 
 export const SHOW_LOADER = "SHOW_LOADER";
 export const FETCH_NOTES = "FETCH_NOTES";
+export const SWITCH_THEME = "SWITCH_THEME";
