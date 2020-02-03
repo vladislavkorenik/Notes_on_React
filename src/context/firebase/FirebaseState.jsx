@@ -3,7 +3,7 @@ import { FirebaseContext } from "./firebaseContext";
 import { firebaseReducer } from "../../reducers/firebaseReducer";
 import { SHOW_LOADER, NOTE, FETCH_NOTES } from "../../consts/types";
 
-const url = process.env.REACT_APP_DB_URL;
+const url = 'https://react-todo-9fb46.firebaseio.com';
 
 export const FirebaseState = ({ children }) => {
   const initialState = {

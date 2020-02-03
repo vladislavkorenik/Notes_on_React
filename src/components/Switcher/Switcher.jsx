@@ -12,7 +12,7 @@ export const Switcher = () => {
       <input
         type="checkbox"
         className="custom-control-input"
-        id="customSwitch1"
+        id="customSwitch1"suppressContentEditableWarning={}
         checked={switcher.themeSwitcher}
         onChange={handlers}
       />
@@ -21,7 +21,7 @@ export const Switcher = () => {
         htmlFor="customSwitch1"
         style={{ color: `${switcher.themeSwitcher ? "white" : "black"}` }}
       >
-        Switch to dark theme
+          {`Switch to ${switcher.themeSwitcher ? 'default': 'dark'} theme`}
       </label>
     </form>
   );
