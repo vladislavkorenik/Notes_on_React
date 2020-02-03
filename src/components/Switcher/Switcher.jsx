@@ -12,7 +12,7 @@ export const Switcher = () => {
       <input
         type="checkbox"
         className="custom-control-input"
-        id="customSwitch1"suppressContentEditableWarning={}
+        id="customSwitch1"
         checked={switcher.themeSwitcher}
         onChange={handlers}
       />
