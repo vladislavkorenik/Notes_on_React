@@ -23,6 +23,11 @@ export const Navbar = () => {
               About us
             </NavLink>
           </li>
+          <li className="nav-item ">
+            <NavLink className="nav-link" to="/login" exact>
+              Sign in
+            </NavLink>
+          </li>
         </ul>
       </div>
       <div className="navbar-switcher">
