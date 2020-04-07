@@ -1,25 +1,21 @@
 import React, { useContext } from "react";
 import { FirebaseContext } from "../../context/firebase/firebaseContext";
 import { AlertContext } from "../../context/alert/alertContext";
+import { createModalStyles } from "../../consts/createModalStyles";
 
-export const AcceptModal = ({ valueModal, setValueModal, note }) => {
+export const AcceptModal = ({
+  props: { setValueOfAcceptModalDisplay, valueOfAcceptModalDisplay, note },
+}) => {
   const firebase = useContext(FirebaseContext);
   const alert = useContext(AlertContext);
-  const ModalDisplay = {
-    display: valueModal.show,
-    opacity: valueModal.showOpacity,
-    maxWidth: "500px",
-    margin: "150px auto",
-    left: "50%",
-    transform: "translateX(-50%)"
-  };
+  const ModalDisplay = createModalStyles(valueOfAcceptModalDisplay);
 
   const closeModal = () => {
-    setValueModal({ show: "none", showOpacity: 0 });
+    setValueOfAcceptModalDisplay("none");
   };
 
   const acceptModal = () => {
-    setValueModal({ show: "none", showOpacity: 0 });
+    setValueOfAcceptModalDisplay("none");
     firebase.removeNote(note.id);
     alert.show("Note deleted", "danger");
   };

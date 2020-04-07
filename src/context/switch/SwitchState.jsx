@@ -6,6 +6,8 @@ import { SWITCH_THEME } from "../../consts/types";
 export const SwitchState = ({ children }) => {
   const [state, dispatch] = useReducer(switchReducer, {
     themeSwitcher: JSON.parse(localStorage.getItem("theme_state"))
+      ? JSON.parse(localStorage.getItem("theme_state"))
+      : false,
   });
 
   const switchTheme = () => {
@@ -17,7 +19,7 @@ export const SwitchState = ({ children }) => {
     <SwitchContext.Provider
       value={{
         switchTheme,
-        themeSwitcher: state.themeSwitcher
+        themeSwitcher: state.themeSwitcher,
       }}
     >
       {children}

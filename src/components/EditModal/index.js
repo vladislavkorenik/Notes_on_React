@@ -1,3 +1,3 @@
-import EditModal from "./EditModel";
+import EditModal from "./EditModal";
 
 export default EditModal;
