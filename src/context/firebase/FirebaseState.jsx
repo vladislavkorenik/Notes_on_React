@@ -2,13 +2,14 @@ import React, { useReducer } from "react";
 import { FirebaseContext } from "./firebaseContext";
 import { firebaseReducer } from "../../reducers/firebaseReducer";
 import { SHOW_LOADER, NOTE, FETCH_NOTES } from "../../consts/types";
+import { clearIndexDB } from "../../logic/indexDB";
 
-const url = 'https://react-todo-9fb46.firebaseio.com';
+const url = "https://react-todo-9fb46.firebaseio.com";
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
     notes: [],
-    loading: false
+    loading: false,
   };
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
 
@@ -18,78 +19,116 @@ export const FirebaseState = ({ children }) => {
 
   const fetchNotes = async () => {
     showLoader();
+
     const response = await fetch(`${url}/notes.json`);
     const res = await response.json();
     if (res === null) {
       return 0;
     }
-    const payload = Object.keys(res).map(key => {
+    const payload = Object.keys(res).map((key) => {
       return {
         ...res[key],
-        id: key
+        id: key,
       };
     });
     dispatch({
       type: FETCH_NOTES,
-      payload
+      payload,
     });
   };
 
-  const editNote = async payload => {
+  const editNote = async (payload) => {
     const note = {
       title: payload.title,
-      date: new Date().toLocaleString()
+      date: new Date().toLocaleString(),
     };
     await fetch(`${url}/notes/${payload.id}.json`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json;charset=utf-8"
+        "Content-Type": "application/json;charset=utf-8",
       },
-      body: JSON.stringify(note)
+      body: JSON.stringify(note),
     });
     dispatch({
       type: NOTE.EDIT,
-      payload: { note, id: payload.id }
+      payload: { note, id: payload.id },
     });
   };
 
-  const removeNote = async id => {
+  const removeNote = async (id) => {
     await fetch(`${url}/notes/${id}.json`, {
-      method: "DELETE"
+      method: "DELETE",
     });
 
     dispatch({
       type: NOTE.REMOVE,
-      payload: id
+      payload: id,
     });
   };
 
-  const addNote = async title => {
+  const addNote = async (title) => {
     const note = {
       title,
-      date: new Date().toLocaleString()
+      date: new Date().toLocaleString(),
     };
+
     try {
       const response = await fetch(`${url}/notes.json`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json;charset=utf-8"
+          "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(note)
+        body: JSON.stringify(note),
       });
       const res = await response.json();
       const payload = {
         ...note,
-        id: res.name
+        id: res.name,
       };
 
       dispatch({
         type: NOTE.ADD,
-        payload
+        payload,
       });
     } catch (e) {
       throw new Error(e.message);
     }
+
+    clearIndexDB();
+  };
+
+  const editLocalNote = (payload) => {
+    const note = {
+      title: payload.title,
+      date: new Date().toLocaleString(),
+    };
+
+    dispatch({
+      type: NOTE.EDIT,
+      payload: { note, id: payload.id },
+    });
+  };
+
+  const removeLocalNote = async (id) => {
+    dispatch({
+      type: NOTE.REMOVE,
+      payload: id,
+    });
+  };
+
+  const addLocalNote = async (title) => {
+    const note = {
+      title,
+      date: new Date().toLocaleString(),
+    };
+    const payload = {
+      ...note,
+      id: new Date().toLocaleString(),
+    };
+    dispatch({
+      type: NOTE.ADD,
+      payload,
+    });
   };
 
   return (
@@ -100,8 +139,11 @@ export const FirebaseState = ({ children }) => {
         removeNote,
         showLoader,
         editNote,
+        addLocalNote,
+        removeLocalNote,
+        editLocalNote,
         loading: state.loading,
-        notes: state.notes
+        notes: state.notes,
       }}
     >
       {children}

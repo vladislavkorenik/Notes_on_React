@@ -14,8 +14,8 @@ export const Form = () => {
     if (value.trim() && login.authorized) {
       firebase
         .addNote(value.trim())
-        .then(() => alert.show("Note created", "success"))
-        .catch(() => alert.show("Ooops...", "danger"));
+        .catch(() => firebase.addLocalNote(value.trim()));
+      alert.show("Note created", "success");
       setValue("");
     } else if (!login.authorized) {
       alert.show("If you want to add a new note, please log in");

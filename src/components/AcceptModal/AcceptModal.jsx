@@ -16,7 +16,7 @@ export const AcceptModal = ({
 
   const acceptModal = () => {
     setValueOfAcceptModalDisplay("none");
-    firebase.removeNote(note.id);
+    firebase.removeNote(note.id).catch(() => firebase.removeLocalNote(note.id));
     alert.show("Note deleted", "danger");
   };
 

@@ -1,6 +1,6 @@
 {
   "name": "NoteApp",
-  "short_name": "NA",
+  "short_name": "NoteApp",
   "lang": "en-EN",
   "start_url": "/",
   "display": "standalone",

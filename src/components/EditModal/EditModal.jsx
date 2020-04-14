@@ -18,8 +18,12 @@ export const EditModal = ({
 
   const submitHandler = () => {
     if (inputValue.trim()) {
-      firebase.editNote({ id: note.id, title: inputValue });
       setValueOfEditModalDisplay("none");
+      firebase
+        .editNote({ id: note.id, title: inputValue })
+        .catch(() =>
+          firebase.editLocalNote({ id: note.id, title: inputValue })
+        );
       alert.show("Note changed", "success");
     } else {
       alert.show("Input note name");
