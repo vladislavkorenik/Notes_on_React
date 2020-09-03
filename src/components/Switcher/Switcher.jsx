@@ -21,7 +21,7 @@ export const Switcher = () => {
         htmlFor="customSwitch1"
         style={{ color: `${switcher.themeSwitcher ? "white" : "black"}` }}
       >
-          {`Switch to ${switcher.themeSwitcher ? 'default': 'dark'} theme`}
+        {`Switch theme`}
       </label>
     </form>
   );

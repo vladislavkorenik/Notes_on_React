@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 import { AlertContext } from "../../context/alert/alertContext";
-import './Alert.scss'
+
+import "./Alert.scss";
 
 export const Alert = () => {
   const { alert, hide } = useContext(AlertContext);
+
+  if (alert.visiable) {
+    setTimeout(() => hide(), 3000);
+  }
 
   return (
     <CSSTransition

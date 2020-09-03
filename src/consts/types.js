@@ -15,5 +15,6 @@ export const LOGIN = {
 };
 
 export const SHOW_LOADER = "SHOW_LOADER";
+export const HIDE_LOADER = "HIDE_LOADER";
 export const FETCH_NOTES = "FETCH_NOTES";
 export const SWITCH_THEME = "SWITCH_THEME";

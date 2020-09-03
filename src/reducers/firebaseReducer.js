@@ -1,4 +1,4 @@
-import { FETCH_NOTES, SHOW_LOADER, NOTE } from "../consts/types";
+import { FETCH_NOTES, SHOW_LOADER, HIDE_LOADER, NOTE } from "../consts/types";
 import {
   addNotesToIndexDB,
   editNotesFromIndexDB,
@@ -35,6 +35,7 @@ const handlers = {
     };
   },
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
+  [HIDE_LOADER]: (state) => ({ ...state, loading: false }),
   [FETCH_NOTES]: (state, { payload }) => {
     return {
       ...state,

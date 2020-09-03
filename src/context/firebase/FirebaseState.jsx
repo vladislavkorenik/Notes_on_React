@@ -1,7 +1,12 @@
 import React, { useReducer } from "react";
 import { FirebaseContext } from "./firebaseContext";
 import { firebaseReducer } from "../../reducers/firebaseReducer";
-import { SHOW_LOADER, NOTE, FETCH_NOTES } from "../../consts/types";
+import {
+  SHOW_LOADER,
+  NOTE,
+  FETCH_NOTES,
+  HIDE_LOADER,
+} from "../../consts/types";
 import { clearIndexDB } from "../../logic/indexDB";
 
 const url = "https://react-todo-9fb46.firebaseio.com";
@@ -16,13 +21,18 @@ export const FirebaseState = ({ children }) => {
   const showLoader = () => {
     dispatch({ type: SHOW_LOADER });
   };
+  const hideLoader = () => {
+    dispatch({ type: HIDE_LOADER });
+  };
 
   const fetchNotes = async () => {
     showLoader();
 
     const response = await fetch(`${url}/notes.json`);
     const res = await response.json();
+
     if (res === null) {
+      hideLoader();
       return 0;
     }
     const payload = Object.keys(res).map((key) => {
