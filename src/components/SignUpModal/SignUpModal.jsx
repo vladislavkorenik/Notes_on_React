@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { createModalStyles } from "../../consts/createModalStyles";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../store/actionCreators/loginActionCreators";
 
 export const SignUpModal = ({
-  props: { valueOfModalDisplay, setValueOfModalDisplay, login, history, users },
+  props: { valueOfModalDisplay, setValueOfModalDisplay, history, users },
 }) => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const ModalDisplay = createModalStyles(valueOfModalDisplay);
@@ -15,7 +18,7 @@ export const SignUpModal = ({
       alert("User exists");
     } else if (formData.email.trim() && formData.password.trim()) {
       localStorage.setItem("users", JSON.stringify([formData, ...users]));
-      login.signIn();
+      dispatch(signIn());
       history.push("/");
     } else event.preventDefault();
   };

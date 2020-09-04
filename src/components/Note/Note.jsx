@@ -1,16 +1,19 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { EditModal } from "../EditModal/EditModal";
 import { AcceptModal } from "../AcceptModal/AcceptModal";
-import { SwitchContext } from "../../context/switch/switchContext";
-import { AlertContext } from "../../context/alert/alertContext";
-import { LoginContext } from "../../context/login/loginContext";
 
 import "./Note.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { showAlert } from "../../store/actionCreators/alertActionCreators";
+
+const url = "https://react-todo-9fb46.firebaseio.com";
 
 export const Note = ({ note }) => {
-  const switcher = useContext(SwitchContext);
-  const alert = useContext(AlertContext);
-  const login = useContext(LoginContext);
+  const dispatch = useDispatch();
+  const authorized = useSelector((state) => state.loginReducer.authorized);
+  const themeSwitcher = useSelector(
+    (state) => state.switchReducer.themeSwitcher
+  );
 
   const [valueOfEditModalDisplay, setValueOfEditModalDisplay] = useState(
     "none"
@@ -18,8 +21,11 @@ export const Note = ({ note }) => {
   const [valueOfAcceptModalDisplay, setValueOfAcceptModalDisplay] = useState(
     "none"
   );
-  const classes = `btn ${switcher.themeSwitcher ? "btn-dark" : "btn-danger"}`;
+  const classes = `btn ${themeSwitcher ? "btn-dark" : "btn-danger"}`;
 
+  const buttonHandler = (text) => {
+    dispatch(showAlert(text));
+  };
   return (
     <Fragment>
       <li className="list-group-item note_space-between">
@@ -30,9 +36,9 @@ export const Note = ({ note }) => {
         <div className="note__buttons">
           <button
             onClick={() =>
-              login.authorized
+              authorized
                 ? setValueOfEditModalDisplay("block")
-                : alert.show("If you want to edit note, please log in")
+                : buttonHandler("If you want to edit note, please log in")
             }
             type="button"
             className={classes}
@@ -43,9 +49,9 @@ export const Note = ({ note }) => {
           </button>
           <button
             onClick={() =>
-              login.authorized
+              authorized
                 ? setValueOfAcceptModalDisplay("block")
-                : alert.show("If you want to delete note, please log in")
+                : buttonHandler("If you want to delete note, please log in")
             }
             type="button"
             className="btn btn-outline-danger btn-sm"
@@ -57,12 +63,18 @@ export const Note = ({ note }) => {
               setValueOfAcceptModalDisplay,
               valueOfAcceptModalDisplay,
               note,
+              url,
             }}
           />
         </div>
       </li>
       <EditModal
-        props={{ setValueOfEditModalDisplay, valueOfEditModalDisplay, note }}
+        props={{
+          setValueOfEditModalDisplay,
+          valueOfEditModalDisplay,
+          note,
+          url,
+        }}
       />
     </Fragment>
   );

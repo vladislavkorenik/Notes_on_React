@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
-import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import { AlertContext } from "../../context/alert/alertContext";
+import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+
 import { createModalStyles } from "../../consts/createModalStyles";
+import { showAlert } from "../../store/actionCreators/alertActionCreators";
+import { editNote } from "../../store/actionCreators/firebaseActionCreators";
 
 export const EditModal = ({
-  props: { setValueOfEditModalDisplay, valueOfEditModalDisplay, note },
+  props: { setValueOfEditModalDisplay, valueOfEditModalDisplay, note, url },
 }) => {
-  const firebase = useContext(FirebaseContext);
-  const alert = useContext(AlertContext);
+  const dispatch = useDispatch();
+
   const [inputValue, setInputValue] = useState(note.title);
   const ModalDisplay = createModalStyles(valueOfEditModalDisplay);
 
@@ -17,16 +19,42 @@ export const EditModal = ({
   };
 
   const submitHandler = () => {
-    if (inputValue.trim()) {
+    const editFirebaseNote = async (payload) => {
+      const note = {
+        title: payload.title,
+        date: new Date().toLocaleString(),
+      };
+      await fetch(`${url}/notes/${payload.id}.json`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(note),
+      });
+      dispatch(
+        editNote(
+          {
+            id: payload.id,
+            title: payload.title,
+          },
+          note.date
+        )
+      );
+    };
+
+    if (inputValue.trim() === note.title.trim()) {
       setValueOfEditModalDisplay("none");
-      firebase
-        .editNote({ id: note.id, title: inputValue })
-        .catch(() =>
-          firebase.editLocalNote({ id: note.id, title: inputValue })
-        );
-      alert.show("Note changed", "success");
+      dispatch(showAlert("Nothing changed"));
+    } else if (inputValue.trim()) {
+      setValueOfEditModalDisplay("none");
+
+      navigator.onLine
+        ? editFirebaseNote({ id: note.id, title: inputValue })
+        : dispatch(editNote({ id: note.id, title: inputValue }));
+
+      dispatch(showAlert("Note changed", "success"));
     } else {
-      alert.show("Input note name");
+      dispatch(showAlert("Input note name"));
     }
   };
 

@@ -1,10 +1,12 @@
-import React, { useState, useContext } from "react";
-import { SwitchContext } from "../../context/switch/switchContext";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../../store/actionCreators/loginActionCreators";
 
 export const LoginForm = ({
-  props: { setValueOfModalDisplay, login, history, users },
+  props: { setValueOfModalDisplay, history, users },
 }) => {
-  const switcher = useContext(SwitchContext);
+  const dispatch = useDispatch();
+  const themeSwitcher = useSelector((state) => state.themeSwitcher);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const submitHandler = (event) => {
@@ -13,7 +15,7 @@ export const LoginForm = ({
         user.email === formData.email && user.password === formData.password
     );
     if (userExist) {
-      login.signIn();
+      dispatch(signIn());
       history.push("/");
     } else {
       event.preventDefault();
@@ -21,10 +23,8 @@ export const LoginForm = ({
     }
   };
 
-  const bottomClass = `btn ${
-    switcher.themeSwitcher ? "btn-dark" : "btn-danger"
-  }`;
-  const linkClass = `${switcher.themeSwitcher ? "text-dark" : "text-danger"}`;
+  const bottomClass = `btn ${themeSwitcher ? "btn-dark" : "btn-danger"}`;
+  const linkClass = `${themeSwitcher ? "text-dark" : "text-danger"}`;
   return (
     <div style={{ maxWidth: "500px" }} className="mx-auto">
       <form className="px-4 py-3" onSubmit={submitHandler}>

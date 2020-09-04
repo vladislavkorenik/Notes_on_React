@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
 import { SignUpModal } from "../../components/SignUpModal/SignUpModal";
-import { LoginContext } from "../../context/login/loginContext";
 import { createBrowserHistory } from "history";
 
 export const LoginPage = () => {
@@ -9,14 +8,13 @@ export const LoginPage = () => {
   const users = JSON.parse(localStorage.getItem("users"))
     ? JSON.parse(localStorage.getItem("users"))
     : [];
-  const login = useContext(LoginContext);
   const history = createBrowserHistory();
 
   return (
     <div>
-      <LoginForm props={{ setValueOfModalDisplay, login, history, users }} />
+      <LoginForm props={{ setValueOfModalDisplay, history, users }} />
       <SignUpModal
-        props={{ valueOfModalDisplay, setValueOfModalDisplay, login, history, users }}
+        props={{ valueOfModalDisplay, setValueOfModalDisplay, history, users }}
       />
     </div>
   );

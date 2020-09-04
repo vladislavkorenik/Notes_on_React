@@ -1,25 +1,26 @@
-import React, { useContext } from "react";
-import { SwitchContext } from "../../context/switch/switchContext";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { switchAction } from "../../store/actionCreators/switchActionCreators";
 
 export const Switcher = () => {
-  const switcher = useContext(SwitchContext);
+  const themeSwitcher = useSelector(
+    (state) => state.switchReducer.themeSwitcher
+  );
+  const dispatch = useDispatch();
 
-  const handlers = () => {
-    switcher.switchTheme();
-  };
   return (
     <form className="custom-control custom-switch">
       <input
         type="checkbox"
         className="custom-control-input"
         id="customSwitch1"
-        checked={switcher.themeSwitcher}
-        onChange={handlers}
+        checked={themeSwitcher}
+        onChange={() => dispatch(switchAction())}
       />
       <label
         className="custom-control-label"
         htmlFor="customSwitch1"
-        style={{ color: `${switcher.themeSwitcher ? "white" : "black"}` }}
+        style={{ color: `${themeSwitcher ? "white" : "black"}` }}
       >
         {`Switch theme`}
       </label>

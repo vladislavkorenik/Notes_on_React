@@ -1,31 +1,33 @@
-import React, { useContext } from "react";
+import React from "react";
 import { CSSTransition } from "react-transition-group";
-import { AlertContext } from "../../context/alert/alertContext";
 
 import "./Alert.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { hideAlert } from "../../store/actionCreators/alertActionCreators";
 
 export const Alert = () => {
-  const { alert, hide } = useContext(AlertContext);
+  const { alertVisible, alertInfo } = useSelector(
+    (state) => state.alertReducer
+  );
+  const dispatch = useDispatch();
 
-  if (alert.visiable) {
-    setTimeout(() => hide(), 3000);
+  if (alertVisible) {
+    setTimeout(() => dispatch(hideAlert()), 3000);
   }
 
   return (
     <CSSTransition
-      in={alert.visiable}
+      in={alertVisible}
       timeout={750}
       classNames={"alert"}
       mountOnEnter
       unmountOnExit
     >
-      <div
-        className={`alert alert-${alert.type || "warning"} alert-dismissible`}
-      >
+      <div className={`alert alert-${alertInfo.type} alert-dismissible`}>
         <strong>Attention! </strong>
-        {alert.text}
+        {alertInfo.text}
         <button
-          onClick={hide}
+          onClick={() => dispatch(hideAlert())}
           type="button"
           className="close"
           aria-label="Close"

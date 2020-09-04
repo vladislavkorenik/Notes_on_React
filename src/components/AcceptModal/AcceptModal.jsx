@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
-import { FirebaseContext } from "../../context/firebase/firebaseContext";
-import { AlertContext } from "../../context/alert/alertContext";
+import React from "react";
+import { useDispatch } from "react-redux";
+
 import { createModalStyles } from "../../consts/createModalStyles";
+import { showAlert } from "../../store/actionCreators/alertActionCreators";
+import { removeNote } from "../../store/actionCreators/firebaseActionCreators";
 
 export const AcceptModal = ({
-  props: { setValueOfAcceptModalDisplay, valueOfAcceptModalDisplay, note },
+  props: { setValueOfAcceptModalDisplay, valueOfAcceptModalDisplay, note, url },
 }) => {
-  const firebase = useContext(FirebaseContext);
-  const alert = useContext(AlertContext);
+  const dispatch = useDispatch();
+
   const ModalDisplay = createModalStyles(valueOfAcceptModalDisplay);
 
   const closeModal = () => {
@@ -15,9 +17,22 @@ export const AcceptModal = ({
   };
 
   const acceptModal = () => {
+    const removeFirebaseNote = async (id) => {
+      console.log(`${url}/notes/${id}.json`)
+      await fetch(`${url}/notes/${id}.json`, {
+        method: "DELETE",
+      });
+
+      dispatch(removeNote(id));
+    };
+
     setValueOfAcceptModalDisplay("none");
-    firebase.removeNote(note.id).catch(() => firebase.removeLocalNote(note.id));
-    alert.show("Note deleted", "danger");
+
+    navigator.onLine
+      ? removeFirebaseNote(note.id)
+      : dispatch(removeNote(note.id));
+
+    dispatch(showAlert("Note deleted", "danger"));
   };
 
   return (

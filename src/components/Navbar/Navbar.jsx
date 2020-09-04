@@ -1,14 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { NavLink } from "react-router-dom";
 import { Switcher } from "../Switcher/Switcher";
-import { SwitchContext } from "../../context/switch/switchContext";
-import { LoginContext } from "../../context/login/loginContext";
+import { signOut } from "../../store/actionCreators/loginActionCreators";
 
 export const Navbar = () => {
-  const switcher = useContext(SwitchContext);
-  const login = useContext(LoginContext);
+  const dispatch = useDispatch();
+  const authorized = useSelector((state) => state.loginReducer.authorized);
+  const themeSwitcher = useSelector(
+    (state) => state.switchReducer.themeSwitcher
+  );
+
   const classes = `navbar navbar-dark ${
-    switcher.themeSwitcher ? "bg-dark" : "bg-danger"
+    themeSwitcher ? "bg-dark" : "bg-danger"
   }`;
 
   return (
@@ -26,14 +31,12 @@ export const Navbar = () => {
               About us
             </NavLink>
           </li>
-          {login.authorized ? (
+          {authorized ? (
             <li className="nav-item ">
               <a
                 className="nav-link"
                 href="/login"
-                onClick={() =>
-                  login.signOut()
-                }
+                onClick={() => dispatch(signOut())}
               >
                 Sign out
               </a>
